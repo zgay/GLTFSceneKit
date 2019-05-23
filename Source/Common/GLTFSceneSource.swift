@@ -59,23 +59,23 @@ public class GLTFSceneSource : SCNSceneSource {
     public override func scene(options: [SCNSceneSource.LoadingOption : Any]? = nil) throws -> SCNScene {
         let scene = try self.loader.loadScene()
         #if SEEMS_TO_HAVE_SKINNER_VECTOR_TYPE_BUG
-        let sceneData = NSKeyedArchiver.archivedData(withRootObject: scene)
-        let source = SCNSceneSource(data: sceneData, options: nil)!
-        let newScene = source.scene(options: nil)!
-        return newScene
+            let sceneData = NSKeyedArchiver.archivedData(withRootObject: scene)
+            let source = SCNSceneSource(data: sceneData, options: nil)!
+            let newScene = source.scene(options: nil)!
+            return newScene
         #else
-        return scene
+            return scene
         #endif
     }
     
     /*
-     public func cameraNodes() -> [SCNNode] {
-     var cameraNodes = [SCNNode]()
+    public func cameraNodes() -> [SCNNode] {
+        var cameraNodes = [SCNNode]()
+    
+        let scene = try self.loader.loadScene()
+        scene.rootNode.childNodes
      
-     let scene = try self.loader.loadScene()
-     scene.rootNode.childNodes
-     
-     return cameraNodes
-     }
+        return cameraNodes
+    }
      */
 }
