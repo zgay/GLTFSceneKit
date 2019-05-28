@@ -25,17 +25,18 @@ public class GLTFSceneSource : SCNSceneSource {
     }
     
     public override convenience init(url: URL, options: [SCNSceneSource.LoadingOption : Any]? = nil) {
-        self.init(url: url, options: options, extensions: nil)
-    }
-    
-    public convenience init(url: URL, options: [SCNSceneSource.LoadingOption : Any]?, extensions: [String:Codable.Type]?) {
         self.init()
-        
         do {
-            self.loader = try GLTFUnarchiver(url: url, extensions: extensions)
+            let loader = try GLTFUnarchiver(url: url, extensions: nil)
+            self.loader = loader
         } catch {
             print("\(error.localizedDescription)")
         }
+    }
+    
+    public convenience init(url: URL, options: [SCNSceneSource.LoadingOption : Any]?, extensions: [String:Codable.Type]?) throws {
+        self.init()
+        self.loader = try GLTFUnarchiver(url: url, extensions: extensions)
     }
     
     public override convenience init(data: Data, options: [SCNSceneSource.LoadingOption : Any]? = nil) {
@@ -70,10 +71,10 @@ public class GLTFSceneSource : SCNSceneSource {
     /*
     public func cameraNodes() -> [SCNNode] {
         var cameraNodes = [SCNNode]()
-        
+    
         let scene = try self.loader.loadScene()
         scene.rootNode.childNodes
-        
+     
         return cameraNodes
     }
      */
